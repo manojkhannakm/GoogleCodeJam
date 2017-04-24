@@ -1,16 +1,13 @@
-package apac2016.practice;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.StringTokenizer;
 
 /**
  * @author Manoj Khanna
  */
 
-public class A {
+public class cB {
 
     private static InputReader in;
     private static PrintWriter out;
@@ -18,7 +15,7 @@ public class A {
     public static void main(String[] args) {
         if (Arrays.asList(args).contains("-local")) {
             try {
-                in = new InputReader(new FileInputStream("A-small-practice-1.in"));
+                in = new InputReader(new FileInputStream("in.txt"));
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -40,19 +37,62 @@ public class A {
     private static class Solution {
 
         public void solve() {
-            int T = in.nextInt();
+            int t = in.nextInt();
 
-            for (int i = 1; i <= T; i++) {
-                int M = in.nextInt();
+            for (int i = 1; i <= t; i++) {
+                int n = in.nextInt();
 
-                HashMap<String, ArrayList<String>> map = new HashMap<>();
+                int[] p = new int[n];
+                long[] k = new long[n];
 
-                for (int j = 0; j < M; j++) {
-                    String Aj = in.next(),
-                            Bj = in.next();
+                for (int j = 0; j < n; j++) {
+                    int pj = in.nextInt();
+                    long kj = in.nextLong();
+
+                    p[j] = pj;
+                    k[j] = kj;
                 }
 
+                long f;
 
+                if (p[n - 1] == 100) {
+                    f = k[n - 1];
+                } else {
+                    ArrayList<Double> list = new ArrayList<>();
+
+                    for (int j = 0; j < n; j++) {
+                        int pj = p[j];
+                        long kj = k[j];
+
+                        if (pj > 0 && kj > 0) {
+                            list.add(100.0 / pj * kj);
+                        }
+                    }
+
+                    double m = 0.0f;
+
+                    for (Double d : list) {
+                        m += d;
+                    }
+
+                    m /= list.size();
+
+                    double sd = 0.0f;
+
+                    for (Double d : list) {
+                        sd += (d - m) * (d - m);
+                    }
+
+                    sd = Math.sqrt(sd / list.size());
+
+                    if (sd < 1.0) {
+                        f = (long) Math.floor(m);
+                    } else {
+                        f = -1;
+                    }
+                }
+
+                out.println("Case #" + i + ": " + f);
             }
         }
 

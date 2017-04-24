@@ -36,9 +36,9 @@ public class Skeleton {
     private static class Solution {
 
         public void solve() {
-            int T = in.nextInt();
+            int t = in.nextInt();
 
-            for (int i = 1; i <= T; i++) {
+            for (int i = 1; i <= t; i++) {
 
             }
         }

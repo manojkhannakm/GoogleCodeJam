@@ -1,7 +1,4 @@
-package apac2016.a;
-
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
@@ -9,7 +6,7 @@ import java.util.StringTokenizer;
  * @author Manoj Khanna
  */
 
-public class B {
+public class bA {
 
     private static InputReader in;
     private static PrintWriter out;
@@ -39,79 +36,35 @@ public class B {
     private static class Solution {
 
         public void solve() {
-            int T = in.nextInt();
+            int t = in.nextInt();
 
-            for (int i = 1; i <= T; i++) {
-                int Np = in.nextInt(),
-                        Ne = in.nextInt(),
-                        Nt = in.nextInt();
+            for (int i = 1; i <= t; i++) {
+                int n = in.nextInt(),
+                        m = in.nextInt(),
+                        k = in.nextInt();
 
-                int[] Ap = new int[Np];
+                int[] x = new int[m],
+                        y = new int[m];
+                int[][] w = new int[m][24];
 
-                for (int j = 0; j < Np; j++) {
-                    int pj = in.nextInt();
+                for (int j = 0; j < m; j++) {
+                    x[j] = in.nextInt();
+                    y[j] = in.nextInt();
 
-                    Ap[j] = pj;
-                }
-
-                int[] Ae = new int[Ne];
-
-                for (int j = 0; j < Ne; j++) {
-                    int ej = in.nextInt();
-
-                    Ae[j] = ej;
-                }
-
-                int[] At = new int[Nt];
-
-                for (int j = 0; j < Nt; j++) {
-                    int tj = in.nextInt();
-
-                    At[j] = tj;
-                }
-
-                ArrayList<Double> list = new ArrayList<>();
-
-                for (int j = 0; j < Np; j++) {
-                    for (int k = 0; k < Ne; k++) {
-                        for (int l = 0; l < k; l++) {
-                            for (int m = 0; m < Nt; m++) {
-                                list.add(((double) Ap[j] / Ae[k]) * ((double) Ae[l] / At[m]));
-                            }
-                        }
-
-                        for (int l = k + 1; l < Ne; l++) {
-                            for (int m = 0; m < Nt; m++) {
-                                list.add(((double) Ap[j] / Ae[k]) * ((double) Ae[l] / At[m]));
-                            }
-                        }
+                    for (int l = 0; l < 24; l++) {
+                        w[j][l] = in.nextInt();
                     }
                 }
 
-                list.sort(Double::compare);
+                int[] d = new int[k],
+                        s = new int[k];
 
-                int M = in.nextInt();
-
-                out.println("Case #" + i + ":");
-
-                for (int j = 0; j < M; j++) {
-                    int P = in.nextInt(),
-                            Q = in.nextInt();
-
-                    double r = (double) P / Q;
-                    boolean b = false;
-
-                    for (Double d : list) {
-                        if (d == r) {
-                            b = true;
-                            break;
-                        } else if (d > r) {
-                            break;
-                        }
-                    }
-
-                    out.println(b ? "Yes" : "No");
+                for (int j = 0; j < k; j++) {
+                    d[j] = in.nextInt();
+                    s[j] = in.nextInt();
                 }
+
+
             }
         }
 

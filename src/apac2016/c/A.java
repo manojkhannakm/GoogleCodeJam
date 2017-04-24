@@ -45,95 +45,80 @@ public class A {
                 int[] s = new int[p];
 
                 for (int j = 0; j < p; j++) {
-                    int sj = in.nextInt();
-
-                    s[j] = sj;
+                    s[j] = in.nextInt();
                 }
 
                 int n = in.nextInt();
 
-                HashMap<String, ArrayList<Integer>> map = new HashMap<>();
+                int[] w = new int[n];
+                String[][] a = new String[n][p];
 
                 for (int j = 0; j < n; j++) {
-                    int w = in.nextInt();
+                    w[j] = in.nextInt();
 
                     for (int k = 0; k < p; k++) {
-                        String ak = in.next();
-
-                        ArrayList<Integer> list = map.get(ak);
-
-                        if (list == null) {
-                            list = new ArrayList<>();
-                            map.put(ak, list);
-                        }
-
-                        list.add(w * s[k]);
+                        a[j][k] = in.next();
                     }
                 }
 
                 int m = in.nextInt();
 
-                ArrayList<Athlet> list = new ArrayList<>();
+                HashMap<String, Athlete> map = new HashMap<>();
 
-                for (Map.Entry<String, ArrayList<Integer>> entry : map.entrySet()) {
-                    ArrayList<Integer> value = entry.getValue();
-                    value.sort(Comparator.<Integer>reverseOrder());
+                for (int j = 0; j < n; j++) {
+                    for (int k = 0; k < p; k++) {
+                        Athlete athlete = map.get(a[j][k]);
 
-                    int score = 0;
+                        if (athlete == null) {
+                            athlete = new Athlete(a[j][k]);
 
-                    for (int j = 0, x = Math.min(m, value.size()); j < x; j++) {
-                        score += value.get(j);
+                            map.put(a[j][k], athlete);
+                        }
+
+                        athlete.list.add(s[k] * w[j]);
                     }
-
-                    list.add(new Athlet(entry.getKey(), score));
                 }
 
-                list.sort(Comparator.<Athlet>naturalOrder());
+                for (Athlete athlete : map.values()) {
+                    athlete.list.sort(Comparator.reverseOrder());
+
+                    for (int j = 0; j < m && j < athlete.list.size(); j++) {
+                        athlete.s += athlete.list.get(j);
+                    }
+                }
+
+                ArrayList<Athlete> list = new ArrayList<>(map.values());
+                list.sort((o1, o2) -> {
+                    int c = Integer.compare(o2.s, o1.s);
+
+                    if (c == 0) {
+                        c = o1.a.compareTo(o2.a);
+                    }
+
+                    return c;
+                });
 
                 out.println("Case #" + i + ":");
 
-                int rank = 1;
-
-                for (int j = 0; j < list.size(); j++) {
-                    Athlet athlet2 = list.get(j);
-
-                    if (j > 0) {
-                        Athlet athlet1 = list.get(j - 1);
-
-                        if (athlet1.score > athlet2.score) {
-                            rank = j + 1;
-                        }
+                for (int j = 0, k = 1; j < list.size(); j++) {
+                    if (j > 0 && list.get(j - 1).s > list.get(j).s) {
+                        k = j + 1;
                     }
 
-                    out.println(rank + ": " + athlet2.name);
+                    out.println(k + ": " + list.get(j).a);
                 }
             }
         }
 
-        private class Athlet implements Comparable<Athlet> {
+        private class Athlete {
 
-            private String name;
-            private int score;
+            private String a;
 
-            public Athlet(String name, int score) {
-                this.name = name;
-                this.score = score;
-            }
+            private ArrayList<Integer> list = new ArrayList<>();
+            private int s;
 
-            @Override
-            public String toString() {
-                return name + " -> " + score;
-            }
-
-            @Override
-            public int compareTo(Athlet o) {
-                int i = Integer.compare(o.score, score);
-
-                if (i == 0) {
-                    i = name.compareTo(o.name);
-                }
-
-                return i;
+            public Athlete(String a) {
+                this.a = a;
             }
 
         }

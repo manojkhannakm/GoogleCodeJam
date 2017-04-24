@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
  * @author Manoj Khanna
  */
 
-public class B {
+public class bB {
 
     private static InputReader in;
     private static PrintWriter out;
@@ -37,62 +37,79 @@ public class B {
     private static class Solution {
 
         public void solve() {
-            int t = in.nextInt();
+            int T = in.nextInt();
 
-            for (int i = 1; i <= t; i++) {
-                int n = in.nextInt();
+            for (int i = 1; i <= T; i++) {
+                int Np = in.nextInt(),
+                        Ne = in.nextInt(),
+                        Nt = in.nextInt();
 
-                int[] p = new int[n];
-                long[] k = new long[n];
+                int[] Ap = new int[Np];
 
-                for (int j = 0; j < n; j++) {
+                for (int j = 0; j < Np; j++) {
                     int pj = in.nextInt();
-                    long kj = in.nextLong();
 
-                    p[j] = pj;
-                    k[j] = kj;
+                    Ap[j] = pj;
                 }
 
-                long f;
+                int[] Ae = new int[Ne];
 
-                if (p[n - 1] == 100) {
-                    f = k[n - 1];
-                } else {
-                    ArrayList<Double> list = new ArrayList<>();
+                for (int j = 0; j < Ne; j++) {
+                    int ej = in.nextInt();
 
-                    for (int j = 0; j < n; j++) {
-                        int pj = p[j];
-                        long kj = k[j];
+                    Ae[j] = ej;
+                }
 
-                        if (pj > 0 && kj > 0) {
-                            list.add(100.0 / pj * kj);
+                int[] At = new int[Nt];
+
+                for (int j = 0; j < Nt; j++) {
+                    int tj = in.nextInt();
+
+                    At[j] = tj;
+                }
+
+                ArrayList<Double> list = new ArrayList<>();
+
+                for (int j = 0; j < Np; j++) {
+                    for (int k = 0; k < Ne; k++) {
+                        for (int l = 0; l < k; l++) {
+                            for (int m = 0; m < Nt; m++) {
+                                list.add(((double) Ap[j] / Ae[k]) * ((double) Ae[l] / At[m]));
+                            }
+                        }
+
+                        for (int l = k + 1; l < Ne; l++) {
+                            for (int m = 0; m < Nt; m++) {
+                                list.add(((double) Ap[j] / Ae[k]) * ((double) Ae[l] / At[m]));
+                            }
+                        }
+                    }
+                }
+
+                list.sort(Double::compare);
+
+                int M = in.nextInt();
+
+                out.println("Case #" + i + ":");
+
+                for (int j = 0; j < M; j++) {
+                    int P = in.nextInt(),
+                            Q = in.nextInt();
+
+                    double r = (double) P / Q;
+                    boolean b = false;
+
+                    for (Double d : list) {
+                        if (d == r) {
+                            b = true;
+                            break;
+                        } else if (d > r) {
+                            break;
                         }
                     }
 
-                    double m = 0.0f;
-
-                    for (Double d : list) {
-                        m += d;
-                    }
-
-                    m /= list.size();
-
-                    double sd = 0.0f;
-
-                    for (Double d : list) {
-                        sd += (d - m) * (d - m);
-                    }
-
-                    sd = Math.sqrt(sd / list.size());
-
-                    if (sd < 1.0) {
-                        f = (long) Math.floor(m);
-                    } else {
-                        f = -1;
-                    }
+                    out.println(b ? "Yes" : "No");
                 }
-
-                out.println("Case #" + i + ": " + f);
             }
         }
 

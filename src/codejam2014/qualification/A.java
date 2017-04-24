@@ -6,7 +6,7 @@ import java.util.Scanner;
  * @author Manoj Khanna
  */
 
-public class MagicTrick {
+public class A {
 
     private static int[] getRowDatas(Scanner scanner) {
         int rowIndex = scanner.nextInt();
