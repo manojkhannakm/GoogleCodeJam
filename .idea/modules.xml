@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GoogleCodeJam.iml" filepath="$PROJECT_DIR$/GoogleCodeJam.iml" />
+      <module fileurl="file://$PROJECT_DIR$/google-code-jam.iml" filepath="$PROJECT_DIR$/google-code-jam.iml" />
     </modules>
   </component>
 </project>
